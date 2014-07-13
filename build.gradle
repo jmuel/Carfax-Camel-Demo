@@ -1,0 +1,24 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'application'
+
+def camelVersion = "2.12.4"
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.codehaus.groovy:groovy-all:2.3.3'
+	compile 'org.slf4j:slf4j-simple:1.7.6'
+	compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-core'
+	compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-stream'
+	compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-groovy'
+	compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-jetty'
+}
+
+mainClassName = "Demo"
+
+run {
+	standardInput = System.in
+}

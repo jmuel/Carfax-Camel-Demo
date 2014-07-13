@@ -1,0 +1,1 @@
+This is just a basic example of a camel router that sets up a url that other services can hit and then passes the message along.
