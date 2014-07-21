@@ -18,7 +18,3 @@ dependencies {
 }
 
 mainClassName = "Demo"
-
-run {
-	standardInput = System.in
-}

@@ -2,14 +2,25 @@ import org.apache.camel.*
 import org.apache.camel.impl.*
 import org.apache.camel.builder.*
 
+import java.util.concurrent.Executors
+
 public class Demo{
     public static void main(String... args) {
         def camelContext = new DefaultCamelContext()
 
         camelContext.addRoutes(new RouteBuilder() {
             def void configure() {
-                from("jetty:http://localhost:11337/test")
-                    .to("stream:out")
+                from("file:target/inventory?noop=true")
+                        .log("Starting to process big file")
+                        .split(body().tokenize("\n")).streaming().executorService(Executors.newCachedThreadPool())
+//                      .split(body().tokenize("\n")).streaming().executorService(Executors.newFixedThreadPool(20))
+                        .bean(InventoryService.class, "csvToObject")
+                        .to("direct:update")
+                        .end()
+                        .log("Done processing big file:")
+
+                from("direct:update")
+                        .bean(InventoryService.class, "updateInventory")
             }
         })
 
