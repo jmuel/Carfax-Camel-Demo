@@ -21,6 +21,14 @@ public class Demo{
 
                 from("direct:update")
                         .bean(InventoryService.class, "updateInventory")
+
+                def router = from("netty-http:http://0.0.0.0:9090")
+                        .log('Service Call ${header.caller} -> ${header.service}')
+                        .choice()
+                            .when(header("caller").isNull()).transform().constant('{"error": true, "message": "missing caller header"}')
+                            .when(header("service").isNull()).transform().constant('{"error": true, "message": "missing service header"}');
+                new RouteReader().read(router, routes.newInstance(), 'test')
+                router.endChoice().end()
             }
         })
 
