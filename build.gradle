@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'application'
 
-def camelVersion = "2.12.4"
+def camelVersion = "2.13.2"
 
 repositories {
 	mavenCentral()
@@ -14,7 +14,9 @@ dependencies {
 	compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-core'
 	compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-stream'
 	compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-groovy'
-	compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-jetty'
+	compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-netty-http'
+    compile group: 'org.apache.camel', version: "2.13.2", name: 'camel-http4'
+    compile group: 'com.github.groovy-wslite', name: 'groovy-wslite', version: '1.1.0'
 }
 
 mainClassName = "Demo"
